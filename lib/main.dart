@@ -1,11 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/route_manager.dart';
+import 'package:highthon_10th_favorite/firebase_options.dart';
 import 'package:highthon_10th_favorite/pages/MainPage.dart';
+import 'package:highthon_10th_favorite/pages/auth/LoginPage.dart';
 import 'package:highthon_10th_favorite/util/style/theme.dart';
 
-void main() {
-  // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await dotenv.load(fileName: 'assets/config/.env');
 
   runApp(const MainApp());
 }
@@ -23,8 +28,10 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       getPages: [
-        GetPage(name: '/', page: () => const MainPage())
+        GetPage(name: '/', page: () => const MainPage()),
+        GetPage(name: '/login', page: () => const LoginPage())
       ],
+      initialRoute: '/login',
       theme: initThemeData(brightness: Brightness.light),
       darkTheme: initThemeData(brightness: Brightness.dark),
       themeMode: ThemeMode.system,

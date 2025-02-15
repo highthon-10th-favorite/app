@@ -8,11 +8,16 @@ environment:
 
 dependencies:
   dot_curved_bottom_nav: ^0.0.2
+  firebase_auth: ^5.4.2
+  firebase_core: ^3.11.0
   flutter:
     sdk: flutter
+  flutter_dotenv: ^5.2.1
   flutter_native_splash: ^2.4.4
   flutter_svg: ^2.0.17
   get: ^4.7.2
+  google_sign_in: ^6.2.2
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:
@@ -24,6 +29,7 @@ flutter:
   assets: 
     - assets/svgs/
     - assets/images/
+    - assets/config/
   fonts:
     - family: Moneygraphy
       fonts: 

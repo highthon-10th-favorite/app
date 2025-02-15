@@ -18,7 +18,7 @@ class _MainPageState extends State<MainPage> {
     const ChatPage(),
     const HomePage(),
     const ProfilePage(),
-  ]; // TODO: 페이지 추가
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,6 @@ class _MainPageState extends State<MainPage> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: AppBar(
-          title: const Text("test"),
         ) // TODO: 앱 바 설정
       ),
       body: pages[_currentIndex],
