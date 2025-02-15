@@ -1,7 +1,10 @@
+import 'package:dot_curved_bottom_nav/dot_curved_bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:highthon_10th_favorite/util/style/colors.dart';
 
-class MyBottomNavigationBar extends StatelessWidget {
+class MyBottomNavigationBar extends StatefulWidget {
   final int currentIndex;
   final Function(int) onTap;
 
@@ -12,29 +15,53 @@ class MyBottomNavigationBar extends StatelessWidget {
   });
 
   @override
+  // ignore: library_private_types_in_public_api
+  _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
+}
+
+class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
+  @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        double iconSize = constraints.maxWidth * 0.06;
-        return BottomNavigationBar(
-          backgroundColor: Colors.white,
-          currentIndex: currentIndex,
-          onTap: onTap,
-          type: BottomNavigationBarType.fixed,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home, size: iconSize),
-              label: "홈",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home, size: iconSize),
-              label: "홈",
-            ),
-          ],
-          selectedItemColor: const Color(0xff3B6DFF),
-          unselectedItemColor: const Color(0xffD1D2D1),
-        );
-      },
+    return DotCurvedBottomNav(
+      indicatorColor: white,
+      backgroundColor: white,
+      selectedColor: primaryColor,
+      unSelectedColor: primary,
+      animationDuration: const Duration(milliseconds: 300),
+      animationCurve: Curves.ease,
+      selectedIndex: widget.currentIndex,
+      indicatorSize: 7,
+      borderRadius: 40,
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+      height: 75,
+      strokeColor: quaternary,
+      circleStrokeColor: quaternary,
+      onTap: (index) {
+          setState(() => widget.onTap(index));
+        },
+      items: [
+        BottomNavigationBarItem(
+          icon: SvgPicture.asset(
+            'assets/svgs/chat.svg',
+            color: widget.currentIndex == 0 ? primaryColor : primary,
+          ),
+          label: "채팅",
+        ),
+        BottomNavigationBarItem(
+          icon: SvgPicture.asset(
+            'assets/svgs/home.svg',
+            color: widget.currentIndex == 1 ? primaryColor : primary,
+          ),
+          label: "홈",
+        ),
+        BottomNavigationBarItem(
+          icon: SvgPicture.asset(
+            'assets/svgs/profile.svg',
+            color: widget.currentIndex == 2 ? primaryColor : primary,
+          ),
+          label: "프로필",
+        ),
+      ],
     );
   }
 }

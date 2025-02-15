@@ -7,8 +7,10 @@ environment:
   sdk: ^3.5.3
 
 dependencies:
+  dot_curved_bottom_nav: ^0.0.2
   flutter:
     sdk: flutter
+  flutter_native_splash: ^2.4.4
   flutter_svg: ^2.0.17
   get: ^4.7.2
 
@@ -19,3 +21,11 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets: 
+    - assets/svgs/
+    - assets/images/
+  fonts:
+    - family: Moneygraphy
+      fonts: 
+        - asset: assets/fonts/Moneygraphy-Rounded.ttf
+          weight: 400
