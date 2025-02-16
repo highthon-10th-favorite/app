@@ -12,11 +12,13 @@ dependencies:
   firebase_core: ^3.11.0
   flutter:
     sdk: flutter
+  flutter_card_swiper: ^7.0.2
   flutter_dotenv: ^5.2.1
   flutter_native_splash: ^2.4.4
   flutter_svg: ^2.0.17
   get: ^4.7.2
   google_sign_in: ^6.2.2
+  image_picker: ^1.1.2
   intl: ^0.20.2
 
 dev_dependencies:

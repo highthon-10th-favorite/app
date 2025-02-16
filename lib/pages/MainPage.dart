@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:highthon_10th_favorite/pages/main/ChatPage.dart';
 import 'package:highthon_10th_favorite/pages/main/HomePage.dart';
 import 'package:highthon_10th_favorite/pages/main/ProfilePage.dart';
+import 'package:highthon_10th_favorite/util/style/colors.dart';
 import 'package:highthon_10th_favorite/widgets/MyBottomNavigationBar.dart';
 
 class MainPage extends StatefulWidget {
@@ -13,7 +14,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int _currentIndex = 0;
+  int _currentIndex = 1;
   final pages = [
     const ChatPage(),
     const HomePage(),
@@ -22,11 +23,15 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    final text = TextColors.of(context);
     return Scaffold(
+      backgroundColor: text.white,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: AppBar(
-        ) // TODO: 앱 바 설정
+          backgroundColor: text.white,
+          scrolledUnderElevation: 0,
+        )
       ),
       body: pages[_currentIndex],
       bottomNavigationBar: MyBottomNavigationBar(

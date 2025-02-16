@@ -7,6 +7,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:highthon_10th_favorite/api/UserApi.dart';
 import 'package:highthon_10th_favorite/main.dart';
 import 'package:highthon_10th_favorite/pages/MainPage.dart';
+import 'package:highthon_10th_favorite/pages/auth/SMSVerifyPage.dart';
+import 'package:highthon_10th_favorite/pages/auth/SignUpPage.dart';
 import 'package:highthon_10th_favorite/util/style/colors.dart';
 
 class LoginPage extends StatefulWidget {
@@ -31,13 +33,13 @@ class _LoginPageState extends State<LoginPage> {
       final UserCredential userCredential = await _auth.signInWithCredential(credential);
       final uid = userCredential.user?.uid;
 
-      Get.off(() => const MainPage());
-
-      // UserApi().getUserById(uid!).then((user) {
-      //   if (user.isEmpty) {
-      //     Get.off(() => const MainPage());
-      //   }
-      // });
+      UserApi().getUserById(uid!).then((user) {
+        if (user['status'] == 500) {
+          Get.to(() => const SignUpPage());
+        } else {
+          Get.offAll(() => const MainPage());
+        }
+      });
     } catch (error) {
       print("구글 로그인 에러: $error");
     }
@@ -45,11 +47,13 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final text = TextColors.of(context);
+    final accent = AccentColors.of(context);
     final screenWidth = MediaQuery.of(context).size.width;
     final horizontalPadding = screenWidth * 0.08;
     final verticalPadding = MediaQuery.of(context).size.height * 0.1;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: text.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
@@ -62,7 +66,10 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     width: screenWidth * 0.15,
                     height: screenWidth * 0.16,
-                    child: SvgPicture.asset('assets/svgs/love_cn.svg'),
+                    child: SvgPicture.asset(
+                      'assets/svgs/love_cn.svg',
+                      color: accent.primary,
+                    ),
                   ),
                   SizedBox(height: screenWidth * 0.08),
                   RichText(
@@ -72,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                         TextSpan(
                           text: '최애',
                           style: TextStyle(
-                            color: Color(0xFFB90EFF),
+                            color: accent.primary,
                             fontSize: screenWidth * 0.08,
                             fontFamily: 'Moneygraphy',
                             fontWeight: FontWeight.w400,
@@ -81,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                         TextSpan(
                           text: '에 오신 것을 \n환영합니다!',
                           style: TextStyle(
-                            color: Color(0xFF101016),
+                            color: text.primary,
                             fontSize: screenWidth * 0.08,
                             fontFamily: 'Moneygraphy',
                             fontWeight: FontWeight.w400,
@@ -182,11 +189,12 @@ class SocialLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final buttonWidth = MediaQuery.of(context).size.width * 0.85;
+    final text1 = TextColors.of(context);
     return Container(
       width: buttonWidth,
       height: 50,
       decoration: ShapeDecoration(
-        color: Colors.white,
+        color: text1.white,
         shape: RoundedRectangleBorder(
           side: BorderSide(width: 1.5, color: borderColor),
           borderRadius: BorderRadius.circular(30),

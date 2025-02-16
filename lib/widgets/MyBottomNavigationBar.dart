@@ -14,14 +14,17 @@ class MyBottomNavigationBar extends StatefulWidget {
     required this.onTap,
   });
 
+
   @override
   // ignore: library_private_types_in_public_api
   _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
 }
 
-class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
+class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {  
   @override
   Widget build(BuildContext context) {
+    final text = TextColors.of(context);
+    final accent = AccentColors.of(context);
     return DotCurvedBottomNav(
       indicatorColor: text.white,
       backgroundColor: text.white,
@@ -37,8 +40,8 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
       strokeColor: text.quaternary,
       circleStrokeColor: text.quaternary,
       onTap: (index) {
-          setState(() => widget.onTap(index));
-        },
+        setState(() => widget.onTap(index));
+      },
       items: [
         BottomNavigationBarItem(
           icon: SvgPicture.asset(

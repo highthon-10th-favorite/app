@@ -5,72 +5,37 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class UserApi {
-  final String baseUrl = "${dotenv.env['BASE_URL']}/user";
-    User? user = FirebaseAuth.instance.currentUser;
+  final String baseUrl = "${dotenv.env['BASE_URL']}/api/members";
+  final String baseUrl2 = "${dotenv.env['BASE_URL2']}";
+
+  User? user = FirebaseAuth.instance.currentUser;
 
   Future<Map<String, dynamic>> getUserById(String uid) async {
     final url = Uri.parse('$baseUrl/$uid');
-    final idToken = await user?.getIdToken();  
     final response = await http.get(
       url,
       headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer $idToken',
+        'Content-Type': 'application/json;',
       },
     );
 
-    return jsonDecode(response.body) as Map<String, dynamic>;
+    String decodedResponse = utf8.decode(response.bodyBytes);
+
+    return jsonDecode(decodedResponse) as Map<String, dynamic>;
   }
 
-  Future<Map<String, dynamic>> deleteUser() async {
-    final url = Uri.parse('$baseUrl/${user?.uid}');
-    final idToken = await user?.getIdToken();  
-    final response = await http.delete(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer $idToken',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body) as Map<String, dynamic>;
-    } else {
-      return {'error': 'User not found'};
-    }
-  }
-
-  Future<http.Response> createUser(String displayName, String profilePicture, String birthDate, String gender) async {
-    final url = Uri.parse(baseUrl);
+  Future<Map<String, dynamic>> getPictures(String uid) async {
+    final url = Uri.parse('$baseUrl2/match-candidates');
     final response = await http.post(
       url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: ''' '''
+      body: jsonEncode({'uid': uid}),
     );
 
-    if (response.statusCode == 201) {
-      return response;
-    } else {
-      throw Exception('Failed to create user');
-    }
-  }
+    String decodedResponse = utf8.decode(response.bodyBytes);
 
-  Future<http.Response> updateUser(String displayName, String birthDate, String gender) async {
-    final url = Uri.parse('$baseUrl/${user?.uid}');
-    final response = await http.patch(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: ''' '''
-    );
-
-    if (response.statusCode == 201) {
-      return response;
-    } else {
-      throw Exception('Failed to update user');
-    }
+    return jsonDecode(decodedResponse) as Map<String, dynamic>;
   }
 }
